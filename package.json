@@ -1,13 +1,13 @@
 {
-  "name": "radiolabel",
-  "version": "1.0.2",
-  "description": "Mutation indicator overlays for CableReady operations",
+  "name": "stimulus-audio",
+  "version": "1.0.0",
+  "description": "Play audio files - even on iPhone",
   "keywords": [
     "stimulusjs",
-    "cableready",
-    "rails",
-    "development",
-    "overlay"
+    "audio",
+    "sound",
+    "mp3",
+    "ios"
   ],
   "main": "dist/index.js",
   "umd:main": "dist/index.umd.js",
@@ -26,11 +26,9 @@
   },
   "homepage": "https://leastbad.com/",
   "bugs": {
-    "url": "https://github.com/leastbad/radiolabel/issues"
+    "url": "https://github.com/leastbad/stimulus-audio/issues"
   },
   "dependencies": {
-    "cable_ready": "^4.4.0-pre1",
-    "gsap": "^3.5.1",
     "stimulus": "^1.1.1"
   },
   "devDependencies": {
@@ -49,6 +47,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/leastbad/radiolabel.git"
+    "url": "https://github.com/leastbad/stimulus-audio.git"
   }
 }

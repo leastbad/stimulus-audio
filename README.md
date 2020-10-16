@@ -1,77 +1,72 @@
-<h1 align="center">Radiolabel</h1>
+<h1 align="center">stimulus-audio</h1>
 <p align="center">
-  <a href="https://www.npmjs.com/package/radiolabel" rel="nofollow">
-    <img src="https://badge.fury.io/js/radiolabel.svg" alt="npm version">
+  <a href="https://www.npmjs.com/package/stimulus-audio" rel="nofollow">
+    <img src="https://badge.fury.io/js/stimulus-audio.svg" alt="npm version">
   </a>
 </p>
 
 <p align="center">
-  <b>Mutation indicator overlays for CableReady operations</b></br>
-  <sub>Tiny at &lt;100 LOC </sub>
+  <b>Play audio files - even on iPhone</b></br>
+  <sub>Barely exists with &lt;20 LOC </sub>
 </p>
 
 <br />
 
-- **Simple**: this is a drop-in, code-free solution
-- **Styled**: zero CSS, use any design framework
-- **Backend Agnostic**: works with or without [StimulusReflex](https://docs.stimulusreflex.com)
-- **Turbolinks**: compatible with Turbolinks by design
+- **Supports iOS on Safari**: what restriction? :)
+- **Simple**: it's just a wrapper on Audio()
 - **MIT Licensed**: free for personal and commercial use
 
-## Built for CableReady
+## This wasn't supposed to be hard
 
-This [Stimulus](https://stimulusjs.org/) controller intercepts CableReady `after-` DOM events. When it detects an operation that mutates an element, it will create a titled overlay which briefly announces when an element is modified.
+If you look online, it's fucking crazy how many developer-hours have been sunk into trying to make iPhone Safari play sounds. What initially seems like it should be the simplest thing in the world is just the entry-point to a rabbit hole full of worms, sitting on the tip of an iceberg. All of this because Apple - in their infinite wisdom - decided to make Safari refuse to play sounds unless the user initiated them with a tap.
 
-Morph operations will be orange, while all others are green.
+Enough. This ends, now.
 
-If an operation was initiated by [StimulusReflex](https://docs.stimulusreflex.com), additional information will be presented about the Reflex action in the title.
+Just drop an `audio` controller on your `body` and you will have a fully unlocked audio player available.
 
 ## Setup
 
-First, add Radiolabel to your `package.json`:
+First, add stimulus-audio to your `package.json`:
 
-`yarn add radiolabel`
+`yarn add stimulus-audio`
 
-Then, just add Radiolabel to your main JS entry point or Stimulus controllers root folder:
+Add stimulus-audio to your main JS entry point or Stimulus controllers root folder:
 
 ```js
 import { Application } from 'stimulus'
-import Radiolabel from 'radiolabel'
+import Audio from 'stimulus-audio'
 
 import { definitionsFromContext } from 'stimulus/webpack-helpers'
 const application = Application.start()
 const context = require.context('../controllers', true, /\.js$/)
 application.load(definitionsFromContext(context))
 
-// Manually register Radiolabel as a Stimulus controller
-application.register('radiolabel', Radiolabel)
+// Manually register Audio as a Stimulus controller
+application.register('audio', Audio)
 ```
 
-Optionally, you can restrict the import to your `development` environment:
-
-```js
-import { Application } from 'stimulus'
-
-import { definitionsFromContext } from 'stimulus/webpack-helpers'
-const application = Application.start()
-const context = require.context('../controllers', true, /\.js$/)
-application.load(definitionsFromContext(context))
-
-if (process.env.RAILS_ENV === 'development') {
-  import('radiolabel').then(Radiolabel =>
-    application.register('radiolabel', Radiolabel.default)
-  )
-}
-```
-
-If Stimulus can't locate a controller at runtime, the `data-controller` attribute is ignored, meaning your template can reference `radiolabel` in the `production` environment and nothing will happen.
-
-## HTML Markup
+Add an `audio` controller to your `body`:
 
 ```html
-<body data-controller="radiolabel"></body>
+<body data-controller="audio"></body>
 ```
-<tiny>Yes, that's really it.</tiny>
+
+Finally, you can play sounds from anywhere in your application using the `audio` accessor from the DOM element you put the controller on. This is a reference to a standard [Audio](https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement/Audio) object, which supports `play`, `pause` and many other family favorites.
+
+```js
+document.body.audio.src = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/858/outfoxing.mp3'
+document.body.audio.play()
+```
+
+Note that `play()` returns a Promise, so you can do this:
+
+```js
+document.body.audio.play()
+  .then(() => console.log('The song has finished.'))
+  .catch(err => console.log('There was an error:', err))
+```
+
+<tiny>It's that easy.</tiny>
 
 ## Contributing
 

@@ -62,7 +62,7 @@ Note that `play()` returns a Promise, so you can do this:
 
 ```js
 document.body.audio.play()
-  .then(() => console.log('The song has finished.'))
+  .then(() => console.log('The song has started.'))
   .catch(err => console.log('There was an error:', err))
 ```
 
